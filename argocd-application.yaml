@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: testrepo-app
+  name: devops-assessment-app
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'git@github.com:DariuszPrzysiecki/testrepo.git' # Updated to use SSH
+    repoURL: 'git@github.com:DariuszPrzysiecki/devops-assessment.git'
     targetRevision: HEAD
     path: helm-chart
   destination:
