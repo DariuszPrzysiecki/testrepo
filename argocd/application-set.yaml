@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: spring-boot-api-appset
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: dev-global-cluster-0
+            url: https://kubernetes-dev-url
+            valuesFile: dev.yaml
+          - cluster: prd-global-cluster-5
+            url: https://kubernetes-prd-url
+            valuesFile: prod.yaml
+  template:
+    metadata:
+      name: '{{cluster}}-spring-boot-api'
+    spec:
+      project: spring-boot-api
+      source:
+        repoURL: 'https://github.com/your-repo/helm-chart-repo.git'
+        targetRevision: HEAD
+        chart: spring-boot-api
+        helm:
+          valueFiles:
+            - '{{valuesFile}}'
+      destination:
+        server: '{{url}}'
+        namespace: spring-boot-api
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

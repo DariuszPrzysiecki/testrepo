@@ -1,0 +1,35 @@
+replicaCount: 3
+image:
+  repository: busybox
+  tag: stable
+service:
+  type: ClusterIP
+  ports:
+    - name: api
+      port: 8080
+      targetPort: 8080
+    - name: logs
+      port: 8081
+      targetPort: 8081
+    - name: soap
+      port: 8082
+      targetPort: 8082
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: dev.spring-boot-api.local
+      paths:
+        - path: /api
+          port: 8080
+        - path: /logs
+          port: 8081
+        - path: /soap
+          port: 8082
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
