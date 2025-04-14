@@ -21,11 +21,11 @@ ingress:
     - host: dev.spring-boot-api.local
       paths:
         - path: /api
-          port: 8080
+          pathType: Prefix
         - path: /logs
-          port: 8081
+          pathType: Prefix
         - path: /soap
-          port: 8082
+          pathType: Prefix
 resources:
   limits:
     cpu: 100m
